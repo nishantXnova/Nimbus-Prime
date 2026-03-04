@@ -36,6 +36,23 @@ In the modern software landscape, "bloat" is the default. Nimbus Prime rejects t
 
 ---
 
+## 🏆 Why Nimbus Prime is Better than Traditional Launchers
+Launchers like **Prism Launcher** or **SKLauncher** are excellent for modpack management, but they often fall short in hardware-specific optimization and resource efficiency. Here is why Nimbus Prime is in a class of its own:
+
+### 1. 📂 Zero-Bloat Distribution (No `.minecraft` Bloat)
+I specifically chose **not** to include the `.minecraft` folder or any game assets in the repository. 
+- **The Reason**: Including game files makes the repository massive, slow to clone, and legally ambiguous. 
+- **The Better Way**: Nimbus Prime uses the **Asset Guardian** to dynamically build and link your environment on the fly. It detects your existing installation or creates a fresh, clean one, ensuring you only ever store what is strictly necessary.
+
+### ⚡ Automatic vs. Manual Optimization
+While Prism requires you to manually enter JVM flags (which 99% of players never do correctly), Nimbus Prime **automates the expertise**. It applies **Aikar's Flags** and calculates memory tiers based on a real-time hardware audit. You get "Server-Grade" performance without ever opening a settings menu.
+
+### 🧊 Two-File Architecture: How did we do it?
+Most launchers have hundreds of classes. Nimbus Prime achieves everything in just **two main files** (`NimbusPrime.java` and `LaunchEngine.java`).
+- **How?**: By leveraging **Modern Java 21 features** like `Records`, `Sealed Classes`, and the high-level `HttpClient` API. We wrote highly dense, modular code where every line serves multiple purposes, eliminating the need for the "boilerplate hell" found in older Java applications.
+
+---
+
 ## 🛡️ Subsystem 1: The Asset Guardian
 The Asset Guardian is a self-healing system designed to ensure that `NoSuchFileException` and `Missing sound` errors are a thing of the past.
 
