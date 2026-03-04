@@ -135,7 +135,20 @@ Every pixel of the UI is generated programmatically. No images are used except f
 
 ---
 
-## 🛠️ Technical Reference for Developers
+## � Easy Setup (For High-Performance Players)
+
+If you have **Java 21+** installed, you can skip compilation and run the pre-built engine directly:
+
+1.  **Download** our [latest release](https://github.com/nishantXnova/Nimbus-Prime/releases) containing `NimbusPrime.jar`.
+2.  **Place** `logo.webp` in the same directory as the JAR.
+3.  **Launch** it with this command (or use the provided `run.ps1`):
+    ```powershell
+    java "-Dnimbus.home=." -jar NimbusPrime.jar
+    ```
+
+---
+
+## �🛠️ Technical Reference for Developers
 
 ### Folder Structure
 - `src/`: Pure Java source files.
