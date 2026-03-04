@@ -1,0 +1,10 @@
+# Nimbus Prime Git Ignore
+out/
+*.log
+config.properties
+startup_output.txt
+.gemini/
+.agents/
+.agent/
+_agents/
+_agent/
