@@ -338,6 +338,7 @@ public class NimbusPrime extends JFrame {
         final int[]     exitDelay    = {0};
         final boolean[] launchStarted = {false};
         final boolean[] launchDone    = {false};
+        final long      startTime     = System.currentTimeMillis();
 
         anim.addActionListener(e -> {
             frame[0]++;
@@ -359,6 +360,8 @@ public class NimbusPrime extends JFrame {
                             StandardCharsets.UTF_8);
                         LaunchEngine.launchGame(mcDir, ver, user, javaExe, profile, json);
                         LaunchEngine.waitForLogMarker("Sound engine started", 60);
+                        long duration = System.currentTimeMillis() - startTime;
+                        LaunchEngine.logLoadTime(duration);
                         return null;
                     }
                     @Override protected void process(List<String> chunks) {

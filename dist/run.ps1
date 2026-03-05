@@ -11,4 +11,4 @@ if (-not (Test-Path $java)) {
     exit 1
 }
 
-& $java "-Dnimbus.home=$PSScriptRoot" -Xms64M -Xmx128M -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -cp $out NimbusPrime
+& $java "-Dnimbus.home=$PSScriptRoot" -cp $out NimbusPrime

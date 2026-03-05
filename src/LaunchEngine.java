@@ -371,10 +371,13 @@ public class LaunchEngine {
         String json = Files.readString(jsonFile, StandardCharsets.UTF_8);
         String osKey = currentOsKey();
         
-        // --- 1. Download Libraries ---
+        // --- 1. Download Libraries (Parallel) ---
         status.accept("📚 Synchronizing libraries...");
         List<String> libraryBlocks = extractLibraryBlocks(json);
         Path librariesDir = dotMinecraft.resolve("libraries");
+        List<CompletableFuture<Void>> libFutures = new ArrayList<>();
+        ExecutorService libPool = Executors.newFixedThreadPool(8);
+
         for (String block : libraryBlocks) {
             if (!shouldIncludeForCurrentOS(block, osKey)) continue;
             
@@ -383,11 +386,21 @@ public class LaunchEngine {
             if (pathMatcher.find() && urlMatcher.find()) {
                 Path libPath = librariesDir.resolve(pathMatcher.group(1).replace('/', File.separatorChar));
                 if (!Files.exists(libPath)) {
-                    Files.createDirectories(libPath.getParent());
-                    client.send(HttpRequest.newBuilder().uri(URI.create(urlMatcher.group(1))).build(), HttpResponse.BodyHandlers.ofFile(libPath));
+                    libFutures.add(CompletableFuture.runAsync(() -> {
+                        try {
+                            Files.createDirectories(libPath.getParent());
+                            client.send(HttpRequest.newBuilder().uri(URI.create(urlMatcher.group(1))).build(), HttpResponse.BodyHandlers.ofFile(libPath));
+                        } catch (Exception e) {
+                            System.err.println("Failed to download library: " + libPath + " - " + e.getMessage());
+                        }
+                    }, libPool));
                 }
             }
         }
+        if (!libFutures.isEmpty()) {
+            CompletableFuture.allOf(libFutures.toArray(new CompletableFuture[0])).join();
+        }
+        libPool.shutdown();
 
         // --- 2. Download Asset Index & Objects ---
         int assetStart = json.indexOf("\"assetIndex\"");
@@ -593,6 +606,17 @@ public class LaunchEngine {
             }
         }
         return -1;
+    }
+
+    public static void logLoadTime(long durationMs) {
+        Path logFile = Path.of("nimbus_load_times.log");
+        String stamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String entry = String.format("[%s] Nimbus Prime Load Time: %.2f seconds\n", stamp, durationMs / 1000.0);
+        try {
+            Files.writeString(logFile, entry, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.err.println("Failed to log load time: " + e.getMessage());
+        }
     }
 
     public static void warmup() {
