@@ -1,0 +1,33 @@
+# Nimbus Prime — Vercel Deployment & Distribution Guide
+
+Follow this guide to host your launcher and make it downloadable for others.
+
+## 1. Prepare for Deployment
+Since this is a Java application and Vercel hosts static/serverless websites, you need to create a project structure that serves the launcher as a file.
+
+### Repository Structure
+Create a new repo with this structure:
+- `index.html` (The landing page)
+- `style.css` (Premium design)
+- `downloads/`
+  - `NimbusPrime.jar`
+  - `run.ps1`
+  - `logo.webp`
+
+## 2. Launch Page Design
+In your `index.html`, add a prominent "DOWNLOAD NIMBUS" button that links to a zip file containing the launcher assets.
+
+## 3. Deployment Steps
+1. Push your repo to GitHub.
+2. Go to [Vercel](https://vercel.com) and import your repository.
+3. Vercel will automatically deploy it as a static site.
+4. Your download link will be: `https://your-project-name.vercel.app/downloads/NimbusPrime_Package.zip`
+
+## 4. User Instructions for Others
+Tell your users:
+1. Download and extract the Zip file.
+2. Right-click `run.ps1` and select **"Run with PowerShell"**.
+3. Nimbus Prime will handle the rest!
+
+---
+*Note: Make sure your Java paths are flexible or instructions are clear for users without Minecraft pre-installed.*
