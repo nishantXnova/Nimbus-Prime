@@ -6,7 +6,7 @@ authors = ["Nishant Paudel"]
 description = "Ultra-high performance, zero-dependency native launcher for Nimbus Prime."
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/nimbus-prime/launcher"
+repository = "https://github.com/nishantXnova/Nimbus-Prime"
 keywords = ["minecraft", "launcher", "performance", "rust"]
 categories = ["games"]
 
